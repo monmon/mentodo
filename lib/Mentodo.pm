@@ -4,6 +4,7 @@ use warnings;
 use utf8;
 use parent qw/Amon2/;
 use 5.008001;
+use Mentodo::Model::Entry;
 
 __PACKAGE__->load_plugin(qw/DBI/);
 

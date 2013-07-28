@@ -3,7 +3,6 @@ use strict;
 use warnings;
 use utf8;
 use Amon2::Web::Dispatcher::Lite;
-use Mentodo::Model::Entry;
 
 any '/' => sub {
     my ($c) = @_;
