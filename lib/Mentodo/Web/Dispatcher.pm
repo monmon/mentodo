@@ -3,10 +3,30 @@ use strict;
 use warnings;
 use utf8;
 use Amon2::Web::Dispatcher::Lite;
+use Mentodo::Model::Entry;
 
 any '/' => sub {
     my ($c) = @_;
-    return $c->render('index.tt');
+
+    my @entries = Mentodo::Model::Entry->list($c->db);
+    return $c->render(
+        'index.tt' => {
+            entries => \@entries,
+        },
+    );
+};
+
+post '/post' => sub {
+    my($c) = @_;
+
+    if (my($body, $deadline) = ($c->req->param('body'), $c->req->param('deadline'))) {
+        Mentodo::Model::Entry->add($c->db, {
+            body => $body,
+            deadline => $deadline,
+        });
+    }
+
+    $c->redirect('/');
 };
 
 post '/account/logout' => sub {
