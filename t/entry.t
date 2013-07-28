@@ -57,19 +57,19 @@ subtest 'idを指定した時にそのidがあれば削除できる' => sub {
 
 subtest '追加したTODOを全部呼び出せる' => sub {
     my $db = Test::MockObject->new->mock('search', sub {
-        return [
+        return (
             Test::MockObject->new
                 ->mock('id', sub {1})
                 ->mock('body', sub {'test'})
                 ->mock('deadline', sub {'2013-07-14'})
-        ];
+        );
     });
 
-    my $entries_ref = Mentodo::Model::Entry->list($db);
+    my @entries = Mentodo::Model::Entry->list($db);
 
-    is $entries_ref->[0]->id, 1, 'idが1か';
-    is $entries_ref->[0]->body, 'test', 'bodyがtestか';
-    is $entries_ref->[0]->deadline, '2013-07-14', 'deadlineが2013-07-14か';
+    is $entries[0]->id, 1, 'idが1か';
+    is $entries[0]->body, 'test', 'bodyがtestか';
+    is $entries[0]->deadline, '2013-07-14', 'deadlineが2013-07-14か';
 };
 
 done_testing;
